@@ -207,8 +207,8 @@ class _GameScreenState extends State<GameScreen> {
 
   Widget _getGameBoard() {
     return Container(
-      width: MediaQuery.of(context).size.width / 1.15,
-      height: MediaQuery.of(context).size.width / 1.15,
+      width: MediaQuery.of(context).size.width / 1.1,
+      height: MediaQuery.of(context).size.width / 1.1,
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
@@ -249,8 +249,8 @@ class _GameScreenState extends State<GameScreen> {
 
   Widget _getResultBoard() {
     return Container(
-      width: 352,
-      height: 352,
+      width: MediaQuery.of(context).size.width / 1.1,
+      height: MediaQuery.of(context).size.width / 1.1,
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
@@ -265,7 +265,7 @@ class _GameScreenState extends State<GameScreen> {
                 : isTurnO
                     ? AssetImage("images/xplayer.png")
                     : AssetImage("images/oplayer.png"),
-            width: 162,
+            width: 132,
           ),
           SizedBox(
             height: 18,
@@ -282,11 +282,10 @@ class _GameScreenState extends State<GameScreen> {
             height: 18,
           ),
           Container(
-            width: 148,
             height: 48,
             child: TextButton(
               onPressed: () {
-                _restartGame();
+                _restartGame(false);
               },
               style: TextButton.styleFrom(
                 backgroundColor: buttonColor,
@@ -298,19 +297,64 @@ class _GameScreenState extends State<GameScreen> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    Icons.restart_alt,
-                    size: 24,
+                    Icons.play_arrow_rounded,
+                    size: 26,
                     color: Colors.white,
                   ),
                   SizedBox(
                     width: 8,
                   ),
                   Text(
-                    "Restart",
+                    "Play Again",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Container(
+            height: 48,
+            child: TextButton(
+              onPressed: () {
+                _restartGame(true);
+              },
+              style: TextButton.styleFrom(
+                // backgroundColor: buttonColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                  side: BorderSide(
+                    width: 1,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.restart_alt,
+                    size: 22,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    "Restart The Game",
+                    style: TextStyle(
+                      fontSize: 18,
                       color: Colors.white,
                     ),
                   ),
@@ -375,11 +419,15 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
-  void _restartGame() {
+  void _restartGame(bool restartTheGame) {
     setState(() {
       gameState = ['', '', '', '', '', '', '', '', ''];
       hasGameFinished = false;
       counter = 0;
+      if (restartTheGame) {
+        scoreX = 0;
+        scoreO = 0;
+      }
     });
   }
 }
